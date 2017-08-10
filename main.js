@@ -1,12 +1,11 @@
-// TODO: make boxes in HTML
-// click listeners
-// there are: numbers, operators, and a window
-// labels
-// eval
 
-// setup
-
+// need to make a button to toggle dropdown of previous entries.
 let layoutData = [
+  {"HTML": "div",
+  "class": "operator",
+  "id": "window",
+  "label": "",
+  },
   {"HTML": "div",
   "class": "eval",
   "id": "clear",
@@ -14,8 +13,18 @@ let layoutData = [
   },
   {"HTML": "div",
   "class": "operator",
-  "id": "window",
-  "label": "",
+  "id": "modulo",
+  "label": "%",
+  },
+  {"HTML": "div",
+  "class": "eval",
+  "id": "squareRoot",
+  "label": "&radic;",
+  },
+  {"HTML": "div",
+  "class": "eval",
+  "id": "delete",
+  "label": "<[X]",
   },
   {"HTML": "div",
   "class": "number",
@@ -98,16 +107,6 @@ let layoutData = [
   "id": "equals",
   "label": "=",
   },
-  // {"HTML": "div",
-  // "class": "operator",
-  // "id": "modulo",
-  // "label": "%",
-  // },
-  // {"HTML": "div",
-  // "class": "operator",
-  // "id": "squareRoot",
-  // "label": "√",
-  // },
   {"HTML": "div",
   "class": "operator",
   "id": "plus",
@@ -126,8 +125,18 @@ layoutData.map((pieces) =>{
 })
 // need event listener
 let string = "";
+let closingParen = false;
 calculator.addEventListener("click", buttonFxn);
 function buttonFxn(click) {
+  if (click.target.id==="squareRoot") {
+    string += "Math.sqrt(";
+    closingParen = true;
+    document.getElementById('window').innerHTML += click.target.innerHTML;
+  }
+  if (click.target.id==="delete"){
+    string = string.slice(0, -1);
+    document.getElementById('window').innerHTML = document.getElementById('window').innerHTML.slice(0,-1);
+  }
 // numbers and operators append to a string. Clear sets the string = ''. equals runs eval on the string
   if (click.target.classList.value != "eval" ) {
     console.log(click.target.id);
@@ -139,6 +148,10 @@ function buttonFxn(click) {
     document.getElementById('window').innerHTML = "";
   }
   if (click.target.id === "equals") {
+    if(closingParen){
+      string += ")";
+    }
     document.getElementById('window').innerHTML = eval(string);
+    add string+"="+result to dropdown list.
   }
 }
